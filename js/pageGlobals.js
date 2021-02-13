@@ -1244,14 +1244,13 @@ $( document ).ready(function()
             });
     };
 
-form.addEventListener('submit', function(e) {
-    initAudio();
-    audioSource = new SoundCloudAudioSource(player);
+    form.addEventListener('submit', function(e) {
+        initAudio();
+        audioSource = new SoundCloudAudioSource(player);
         e.preventDefault();
         var trackUrl = document.getElementById('input').value;
         loadAndUpdate(trackUrl);
     });
-
 });
 
 //document events

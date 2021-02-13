@@ -62,6 +62,40 @@ function initOSC() {
             $("#socket_start").button("enable");
         });
 
+    $("#myInputs").append(
+        '<div class="oscRow">\
+        <input type="text" id="inOSCtext' + messageIndex + '" value="/ch/1"/>\
+        <input type="text" id="inOSCUniform' + messageIndex + '" value="ch1"/>\
+        <button type="submit" id="inOSCenable' + messageIndex + '" onclick="enableOSCMessage(' + messageIndex + ')">Enable</button>\
+        <button type="submit" id="inOSCdisable' + messageIndex + '" onclick="disableOSCMessage(' + messageIndex + ')">Disable</button>\
+        <span id="x' + messageIndex + '" style="color:rgba(255,0,0,0.5);">-</span>\
+        <span id="y' + messageIndex + '" style="color:rgba(0,255,0,0.5);">-</span>\
+        <span id="z' + messageIndex + '" style="color:rgba(0,255,255,0.5);">-</span>\
+        <span id="w' + messageIndex + '" style="color:rgba(255,255,255,0.5);">-</span>\
+        </div>\
+        <div id="rawMessages' + messageIndex + '"> </div>');
+
+    $("#inOSCenable" + messageIndex).button();
+    $("#inOSCdisable" + messageIndex).button({disabled: true});
+    messageIndex += 1;
+
+    $("#myInputs").append(
+        '<div class="oscRow">\
+        <input type="text" id="inOSCtext' + messageIndex + '" value="/ch/2"/>\
+        <input type="text" id="inOSCUniform' + messageIndex + '" value="ch2"/>\
+        <button type="submit" id="inOSCenable' + messageIndex + '" onclick="enableOSCMessage(' + messageIndex + ')">Enable</button>\
+        <button type="submit" id="inOSCdisable' + messageIndex + '" onclick="disableOSCMessage(' + messageIndex + ')">Disable</button>\
+        <span id="x' + messageIndex + '" style="color:rgba(255,0,0,0.5);">-</span>\
+        <span id="y' + messageIndex + '" style="color:rgba(0,255,0,0.5);">-</span>\
+        <span id="z' + messageIndex + '" style="color:rgba(0,255,255,0.5);">-</span>\
+        <span id="w' + messageIndex + '" style="color:rgba(255,255,255,0.5);">-</span>\
+        </div>\
+        <div id="rawMessages' + messageIndex + '"> </div>');
+
+    $("#inOSCenable" + messageIndex).button();
+    $("#inOSCdisable" + messageIndex).button({disabled: true});
+    messageIndex += 1;
+
     $('#appendOSCInput')
         .button()
         .click( function(event)
