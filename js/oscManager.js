@@ -167,6 +167,8 @@ function enableOSCMessage(whom)
             }
             oscM[whom].args = [cMessage.args[0].toFixed(3), cMessage.args[1].toFixed(3),
             			  cMessage.args[2].toFixed(3), cMessage.args[3].toFixed(3)];
+
+            console.log("set args of", whom, "to", oscM[whom].args);
         }
         else
         {
@@ -174,6 +176,11 @@ function enableOSCMessage(whom)
             {
                 $("#rawMessages" + whom).html(cMessage.addressPattern + ' @ ' + JSON.stringify(cMessage.args));
             }
+
+            oscM[whom].args = [cMessage.args[0].toFixed(3), cMessage.args[0].toFixed(3),
+                          cMessage.args[0].toFixed(3), cMessage.args[0].toFixed(3)];
+
+            console.log("set args of", whom, "to", oscM[whom].args);
         }
     });
 
