@@ -39,7 +39,7 @@ function initOSC() {
         .button()
         .click( function(event)
         {
-    		var address = $('#socket_address').val();
+    		var address = window.location.hostname; // $('#socket_address').val();
     		var port = $('#socket_port').val();
     		$('#socket_status').html('waiting');
             // $('#socket_address').prop('disabled', true);
