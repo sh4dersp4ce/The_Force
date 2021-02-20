@@ -84,9 +84,11 @@ function createGlContext() {
         mQuadVBO = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, mQuadVBO);
         gl.bufferData(gl.ARRAY_BUFFER,
-            new Float32Array([-1.0, -1.0,
-                1.0, -1.0, -1.0, 1.0,
-                1.0, 1.0
+            new Float32Array([
+                -0.80, -0.69,
+                0.71, -0.8,
+                -0.93, 0.2,
+                0.67, 0.21
             ]),
             gl.STATIC_DRAW);
         gl.enableVertexAttribArray(vertPosU);
@@ -110,7 +112,7 @@ function createGlContext() {
         vsScreen = v[0];
         mHeader = h[0];
         vsDraw = d[0];
-        var res = newShader(vsDraw, fsNew);
+        var res = newShader(vsScreen, fsNew);
         if (res.mSuccess === false) {
             console.log(res.mInfo);
             alert("error");
@@ -158,12 +160,13 @@ function createTarget(width, height) {
 }
 
 function setShaderFromEditor() {
-    var result = newShader(vsDraw, editor.getValue());
+    var result = newShader(vsScreen, editor.getValue());
     sendOSCMessages();
     return setShader(result, false);
 }
 
 function newShader(vs, shaderCode) {
+
     var res = createShader(vs, mHeader + mInputsStr + mOSCStr + mMIDIStr + shaderCode); //, true);
 
     if (res.mSuccess === false) {

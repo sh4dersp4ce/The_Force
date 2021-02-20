@@ -2,9 +2,9 @@
 precision lowp float;
 
 attribute vec2 position;
-attribute vec2 a_texCoord;
+attribute mediump vec2 a_texCoord;
 
-varying vec2 v_texCoord;
+varying mediump vec2 v_texCoord;
 
 uniform vec2 translation;
 uniform vec2 u_scale;
@@ -20,7 +20,7 @@ void main()
 		scaledPosition.x * rotation.y + scaledPosition.y * rotation.x,
 		scaledPosition.y * rotation.y - scaledPosition.x * rotation.x);
     
-    gl_Position = vec4( rotatedPosition + translation , 0, 1);
+    gl_Position = vec4(position, 0, 1);
     
     v_texCoord = a_texCoord;
 }

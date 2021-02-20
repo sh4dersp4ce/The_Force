@@ -27,6 +27,8 @@ vec3 teal = vec3(0.396,0.878,0.878);
 vec3 magenta = vec3(1.0, 0.189, 0.745);
 vec3 brown = vec3(0.96, 0.474, 0.227);
 
+varying mediump vec2 v_texCoord;
+
 vec2 uvN(){return (gl_FragCoord.xy / resolution);}
 vec2 uv(){return (gl_FragCoord.xy / resolution * 2.0 -1.0) * vec2(resolution.x/resolution.y, 1.0);}
 
