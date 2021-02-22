@@ -27,13 +27,13 @@ let corners = [
     -1., -1.,
     1., -1.,
     -1., 1.,
-    // 1., 1.
+    1., 1.
 ];
 let corner_tex = [
     0.0, 0.0,
     1.0, 0.0,
     0.0, 1.0,
-    // 1.0, 1.0
+    1.0, 1.0
 ];
 
 function createGlContext() {
@@ -162,14 +162,14 @@ function handle_mouse(is_pressed) {
 function handle_key(event) {
     console.log("key event:", event.key);
 
-    if(event.key == "F9") {
+    if(event.key == "F4") {
         if(current_idx > 0) {
             current_idx--;
             console.log("id:", current_idx);
         }
     }
 
-    if(event.key == "F10") {
+    if(event.key == "F9") {
         if(current_idx < 4) {
             current_idx++;
             console.log("id:", current_idx);
@@ -178,7 +178,7 @@ function handle_key(event) {
 }
 
 function draw_arrays() {
-    gl.drawArrays(gl.TRIANGLES, 0, Math.floor(corners.length/2));
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, Math.floor(corners.length/2));
 }
 
 function createTarget(width, height) {

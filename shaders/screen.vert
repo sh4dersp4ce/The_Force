@@ -20,7 +20,7 @@ void main()
 		scaledPosition.x * rotation.y + scaledPosition.y * rotation.x,
 		scaledPosition.y * rotation.y - scaledPosition.x * rotation.x);
     
-    gl_Position = vec4(position, 0, 1);
+    gl_Position = vec4(position, 1, 1);
     
     v_texCoord = a_texCoord;
 }
