@@ -23,6 +23,19 @@ var fsNew = "void main () {\n\tgl_FragColor = vec4(black, 1.0);\n}";
 var testingImage = false;
 var testTexture;
 
+let corners = [
+    -1., -1.,
+    1., -1.,
+    -1., 1.,
+    // 1., 1.
+];
+let corner_tex = [
+    0.0, 0.0,
+    1.0, 0.0,
+    0.0, 1.0,
+    // 1.0, 1.0
+];
+
 function createGlContext() {
     var gGLContext = null;
     var names = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
@@ -84,12 +97,7 @@ function createGlContext() {
         mQuadVBO = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, mQuadVBO);
         gl.bufferData(gl.ARRAY_BUFFER,
-            new Float32Array([
-                -0.80, -0.69,
-                0.71, -0.8,
-                -0.93, 0.2,
-                0.67, 0.21
-            ]),
+            new Float32Array(corners),
             gl.STATIC_DRAW);
         gl.enableVertexAttribArray(vertPosU);
         gl.vertexAttribPointer(vertPosU, 2, gl.FLOAT, false, 0, 0);
@@ -98,12 +106,7 @@ function createGlContext() {
         gl.bindBuffer(gl.ARRAY_BUFFER, mQuadTVBO);
         gl.bufferData(
             gl.ARRAY_BUFFER,
-            new Float32Array([
-                0.0, 0.0,
-                1.0, 0.0,
-                0.0, 1.0,
-                1.0, 1.0
-            ]),
+            new Float32Array(corner_tex),
             gl.STATIC_DRAW);
         gl.enableVertexAttribArray(texLocationAttribute);
         gl.vertexAttribPointer(texLocationAttribute, 2, gl.FLOAT, false, 0, 0);
@@ -125,6 +128,58 @@ function createGlContext() {
     testImage.src = "images/test.jpg";
 }
 
+function set_corner(idx, value) {
+    corners[idx * 2] = value[0];
+    corners[idx * 2 + 1] = value[1];
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, mQuadVBO);
+    gl.bufferData(gl.ARRAY_BUFFER,
+        new Float32Array(corners),
+        gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(vertPosU);
+    gl.vertexAttribPointer(vertPosU, 2, gl.FLOAT, false, 0, 0);
+}
+
+let drag_pressed = false;
+let current_idx = 0;
+
+function handle_mousemove(point) {
+    if(drag_pressed && current_idx > 0) {
+        let ref_point = [
+            point[0]/mCanvas.width - 1,
+            1 - point[1]/mCanvas.height
+        ];
+
+        console.log("drag", ref_point);
+        set_corner(current_idx - 1, ref_point)
+    }
+}
+
+function handle_mouse(is_pressed) {
+    drag_pressed = is_pressed;
+}
+
+function handle_key(event) {
+    console.log("key event:", event.key);
+
+    if(event.key == "F9") {
+        if(current_idx > 0) {
+            current_idx--;
+            console.log("id:", current_idx);
+        }
+    }
+
+    if(event.key == "F10") {
+        if(current_idx < 4) {
+            current_idx++;
+            console.log("id:", current_idx);
+        }
+    }
+}
+
+function draw_arrays() {
+    gl.drawArrays(gl.TRIANGLES, 0, Math.floor(corners.length/2));
+}
 
 function createTarget(width, height) {
     var target = {};
@@ -604,7 +659,7 @@ function paint() {
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, fbos[pingPong].framebuffer);
     gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    draw_arrays();
 
     //draw to screen
     if (numScreens == 1) {
@@ -626,7 +681,7 @@ function paint() {
         // $("#blend2X").val(), $("#blend2Y").val(),
         // $("#blend2Z").val(), $("#blend2W").val());
         gl.uniform4fv(gammaU, gammaValues);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        draw_arrays();
     } else if (numScreens == 3) {
         gl.blendFunc(gl.ONE, gl.ONE);
         gl.enable(gl.BLEND);
@@ -659,7 +714,7 @@ function paint() {
         gl.uniform4f(screenBlendU, $("#blend1X").val(), $("#blend1Y").val(),
             $("#blend1Z").val(), $("#blend1W").val());
         gl.uniform1f(rotateUniform, $("#rotate1").val());
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        draw_arrays();
 
         // right
         gl.uniform2f(translateUniform, $("#point3X").val(), $("#point3Y").val());
@@ -667,7 +722,7 @@ function paint() {
         gl.uniform4f(screenBlendU, $("#blend3X").val(), $("#blend3Y").val(),
             $("#blend3Z").val(), $("#blend3W").val());
         gl.uniform1f(rotateUniform, $("#rotate3").val());
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        draw_arrays();
 
 
         //center
@@ -676,6 +731,6 @@ function paint() {
         gl.uniform4f(screenBlendU, $("#blend2X").val(), $("#blend2Y").val(),
             $("#blend2Z").val(), $("#blend2W").val());
         gl.uniform1f(rotateUniform, $("#rotate2").val());
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        draw_arrays();
     }
 }

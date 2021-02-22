@@ -1260,16 +1260,22 @@ $(document)
     {
         mMousePosX = event.pageX;
         mMousePosY = event.pageY;
+        handle_mousemove([event.pageX, event.pageY]);
     })
     .mousedown(function( event )
     {
         mMouseClickX = event.pageX;
         mMouseClickY = event.pageY;
+        handle_mouse(true);
     })
     .mouseup( function( event )
-    { })
+    {
+        handle_mouse(false);
+    })
     .keydown( function( event )
     {
+        handle_key(event);
+
         updateKeyboardDown(event.keyCode);
         if (event.ctrlKey === true && event.shiftKey === true)
         {
