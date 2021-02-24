@@ -129,8 +129,8 @@ function createGlContext() {
 }
 
 function set_corner(idx, value) {
-    corners[idx * 2] = value[0];
-    corners[idx * 2 + 1] = value[1];
+    corners[idx * 2] = value[0] * 1.5;
+    corners[idx * 2 + 1] = value[1] * 1.5;
 
     gl.bindBuffer(gl.ARRAY_BUFFER, mQuadVBO);
     gl.bufferData(gl.ARRAY_BUFFER,

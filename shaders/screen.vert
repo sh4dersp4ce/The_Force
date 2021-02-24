@@ -12,6 +12,7 @@ uniform float u_degrees;
 
 void main()
 {
+	/*
 	vec2 scaledPosition = position * u_scale;
 	float angleInRadians = u_degrees * 3.14159 / 180.0;
 	vec2 rotation = vec2(sin(angleInRadians), cos(angleInRadians));
@@ -19,8 +20,9 @@ void main()
 	vec2 rotatedPosition = vec2(
 		scaledPosition.x * rotation.y + scaledPosition.y * rotation.x,
 		scaledPosition.y * rotation.y - scaledPosition.x * rotation.x);
+	*/
     
-    gl_Position = vec4(position, 1, 1);
+    gl_Position = vec4(position, 0, 1);
     
     v_texCoord = a_texCoord;
 }
