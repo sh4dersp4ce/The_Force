@@ -1185,6 +1185,7 @@ $( document ).ready(function()
         editor.setValue("void main () {\n\tgl_FragColor = vec4(black, 1.0);\n}", -1);
     }
 
+
     // mCodeMirror.on("drop", function( mCodeMirror, event )
     //             {
     //                 event.stopPropagation();
@@ -1336,10 +1337,11 @@ function setShader(result, fromScript)
     while (mErrors.length > 0)
     {
         var mark = mErrors.pop();
-        editor.session.removeMarker(mark);
+        editor.session.removeMarker(mark);       
     }
 
     editor.session.clearAnnotations();
+    editor.session.addMarker(new Range(0, 0, 1000, 1000), "Highlight", "text", false);
 
     if (result.mSuccess === false)
     {
@@ -1359,7 +1361,7 @@ function setShader(result, fromScript)
                 if(debugging)
                     tAnnotations.push(annotation);
 
-                var id = editor.session.addMarker(new Range(annotation.row, 0, annotation.row, 1), "errorHighlight", "fullLine", false);
+                var id = editor.session.addMarker(new Range(annotation.row, 0, annotation.row, 100), "errorHighlight", "fullLine", false);
                 mErrors.push(id);
             }
         }
